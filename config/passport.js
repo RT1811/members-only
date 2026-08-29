@@ -1,10 +1,10 @@
-const LocalStratergy = requrie("passport-local").Stratergy;
+const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const pool = require("../db/pool");
 
 function initialize(passport) {
     passport.use(
-        new LocalStratergy(async (username, password, done) => {
+        new LocalStrategy(async (username, password, done) => {
             try {
                 const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
                 const user  = result.rows[0];
