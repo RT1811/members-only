@@ -42,4 +42,27 @@ router.post("/log-out", (req, res, next) => {
     });
 });
 
+router.get("/join", (req, res) => {
+    if (!req.user) return res.redirect("/log-in");
+    res.render("join-form");
+});
+
+router.post("/join", async (req, res, next) => {
+    if (!req.user) return res.redirect("/log-in");
+
+    const { passcode } = req.body;
+
+    try {
+        if (passcode === process.env.MEMBER_PASSCODE) {
+        await pool.query("UPDATE users SET membership_status = $1 WHERE id = $2", [
+            "member",
+            req.user.id,
+        ]);
+        }
+        res.redirect("/");
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;
