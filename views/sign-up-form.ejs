@@ -7,8 +7,15 @@
 <body>
   <h1>Sign Up</h1>
   <form action="/sign-up" method="POST">
+    <label for="first_name">First Name</label>
+    <input id="first_name" name="first_name" type="text">
+
+    <label for="last_name">Last Name</label>
+    <input id="last_name" name="last_name" type="text">
+
     <label for="username">Username</label>
     <input id="username" name="username" placeholder="username" type="text" />
+    
     <label for="password">Password</label>
     <input id="password" name="password" type="password" />
     <button type="submit">Sign Up</button>

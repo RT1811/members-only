@@ -7,7 +7,7 @@ const initializePassport = require("./config/passport");
 const app = express();
 initializePassport(passport);
 
-app.set("view engine", ejs);
+app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -17,6 +17,8 @@ app.use(
         saveUninitialized: false,
     })
 );
+
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
@@ -30,4 +32,4 @@ app.use("/", indexRouter);
 app.use("/", authRouter);
 
 const PORT = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server listening on port ${port}`));    
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));    
