@@ -2,9 +2,8 @@ const express  = require("express");
 const router = express.Router();
 const db = require("../db/queries");
 
-router.get("/", async (req, res) => {
-    const messages = await db.getAllMessages();
-    res.render("messages/list", { messages });
+router.get("/", (req, res) => {
+    res.redirect("/");
 });
 
 router.get("/new", async (req, res) => {
@@ -19,7 +18,7 @@ router.post("/new", async (req, res, next) => {
 
     try {
         await db.createMessage(title, text, req.user.id);
-        res.redirect("/messages");
+        res.redirect("/");
     } catch (err) {
         next(err);
     }
@@ -32,7 +31,7 @@ router.post("/:id/delete", async (req, res, next) => {
 
     try {
         await db.deleteMessage(req.params.id);
-        res.redirect("/messages");
+        res.redirect("/");
     } catch (err) {
         next(err);
     }
