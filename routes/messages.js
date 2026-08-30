@@ -25,4 +25,17 @@ router.post("/new", async (req, res, next) => {
     }
 });
 
+router.post("/:id/delete", async (req, res, next) => {
+    if (!req.user || !req.user.is_admin) {
+        return res.status(403).send("Forbidden");
+    }
+
+    try {
+        await db.deleteMessage(req.params.id);
+        res.redirect("/messages");
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;

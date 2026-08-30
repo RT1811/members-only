@@ -20,6 +20,11 @@
       <% } else { %>
         <p>on <%= message.created_at.toDateString() %></p>
       <% } %>
+      <% if (currentUser && currentUser.is_admin) { %>
+        <form method="POST" action="/messages/<%= message.id %>/delete">
+            <button type="submit">Delete</button>
+        </form>
+      <% } %>
     </div>
   <% }) %>
 </body>
