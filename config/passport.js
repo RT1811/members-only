@@ -6,7 +6,7 @@ function initialize(passport) {
     passport.use(
         new LocalStrategy(async (username, password, done) => {
             try {
-                const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+                const result = await pool.query("SELECT * FROM public.users WHERE username = $1", [username]);
                 const user  = result.rows[0];
 
                 if (!user) {
@@ -31,7 +31,7 @@ function initialize(passport) {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+            const result = await pool.query("SELECT * FROM public.users WHERE id = $1", [id]);
             done(null, result.rows[0]);
         } catch(err) {
             done(err);

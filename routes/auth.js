@@ -59,7 +59,7 @@ router.post("/sign-up", signUpValidation, async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await pool.query(
-            `INSERT INTO users
+            `INSERT INTO public.users
             (first_name, last_name, username, password, is_admin)
             VALUES ($1, $2, $3, $4, $5)`,
             [
@@ -108,7 +108,7 @@ router.post("/join", async (req, res, next) => {
 
     try {
         if (passcode === process.env.MEMBER_PASSCODE) {
-        await pool.query("UPDATE users SET membership_status = $1 WHERE id = $2", [
+        await pool.query("UPDATE public.users SET membership_status = $1 WHERE id = $2", [
             "member",
             req.user.id,
         ]);
